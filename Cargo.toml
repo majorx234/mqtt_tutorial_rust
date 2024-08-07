@@ -1,0 +1,20 @@
+[package]
+name = "mqtt_examples_rust"
+version = "0.1.0"
+authors = ["MajorX234 <majorx234@googlemail.com>"]
+edition = "2021"
+
+[lib]
+name = "mqtt_examples"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mqtt_subscriber"
+path = "src/bin/mqtt_subscriber/main.rs"
+
+[[bin]]
+name = "mqtt_publisher"
+path = "src/bin/mqtt_publisher/main.rs"
+
+[dependencies]
+paho-mqtt = { version = "0.12.5" }

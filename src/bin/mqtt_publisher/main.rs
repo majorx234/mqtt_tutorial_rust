@@ -14,7 +14,7 @@ fn main() {
     let create_opts = mqtt::CreateOptionsBuilder::new()
         .server_uri(host)
         .persistence("persist")
-        .client_id("client_id")
+        .client_id(client_id)
         .finalize();
 
     let mqtt_client = mqtt::AsyncClient::new(create_opts).unwrap_or_else(|e| {

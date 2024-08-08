@@ -1,16 +1,20 @@
 use std::process;
 use std::{thread, time};
+use uuid::Uuid;
 
 extern crate paho_mqtt as mqtt;
 
 fn main() {
-    println!("WIP mqtt publisher!");
+    let id = Uuid::new_v4();
+
+    println!("WIP mqtt publisher with ID:{}!", id);
+    let client_id = format!("mqtt_publisher_rust_{}", id);
     let host = "mqtt://localhost:1883".to_string();
 
     let create_opts = mqtt::CreateOptionsBuilder::new()
         .server_uri(host)
         .persistence("persist")
-        .client_id("mqtt_publisher_rust")
+        .client_id("client_id")
         .finalize();
 
     let mqtt_client = mqtt::AsyncClient::new(create_opts).unwrap_or_else(|e| {

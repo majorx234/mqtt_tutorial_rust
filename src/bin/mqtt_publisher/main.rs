@@ -2,6 +2,8 @@ use std::process;
 
 extern crate paho_mqtt as mqtt;
 
+const QOS: i32 = 1;
+
 fn main() {
     println!("WIP mqtt publisher!");
     let host = "mqtt://localhost:1883".to_string();

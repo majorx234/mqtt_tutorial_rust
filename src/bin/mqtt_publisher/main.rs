@@ -1,18 +1,41 @@
+use clap::Parser;
+use paho_mqtt as mqtt;
 use std::process;
 use std::{thread, time};
 use uuid::Uuid;
 
-extern crate paho_mqtt as mqtt;
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    /// name of the client
+    #[arg(short, long, value_name = "client_id")]
+    pub client_id: Option<String>,
+    /// host url
+    #[arg(short, long, value_name = "host")]
+    pub host: Option<String>,
+    /// host port
+    #[arg(short, long, value_name = "port")]
+    pub port: Option<u16>,
+}
 
 fn main() {
-    let id = Uuid::new_v4();
+    let uuid = Uuid::new_v4();
 
-    println!("WIP mqtt publisher with ID:{}!", id);
-    let client_id = format!("mqtt_publisher_rust_{}", id);
-    let host = "mqtt://localhost:1883".to_string();
+    let client_id = Args::parse().client_id.map_or_else(
+        || format!("mqtt_publisher_rust_{}", uuid),
+        |client_id| format!("{}_{}", client_id, uuid),
+    );
+
+    let port = Args::parse().port.map_or_else(|| 1883, |port| port);
+
+    println!("WIP mqtt publisher with ID:{}!", client_id);
+    let host_url = Args::parse().host.map_or_else(
+        || format!("mqtt://localhost:{}", port).to_string(),
+        |host| format!("mqtt://{}:{}", host, port).to_string(),
+    );
 
     let create_opts = mqtt::CreateOptionsBuilder::new()
-        .server_uri(host)
+        .server_uri(host_url)
         .persistence("persist")
         .client_id(client_id)
         .finalize();

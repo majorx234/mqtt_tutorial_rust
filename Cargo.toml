@@ -19,3 +19,4 @@ path = "src/bin/mqtt_publisher/main.rs"
 [dependencies]
 paho-mqtt = { version = "0.12.5" }
 uuid = { version = "1.10.0", features = [ "v4", "fast-rng", "macro-diagnostics" ]}
+clap = { version = "4.5.15", features = ["derive"]}
